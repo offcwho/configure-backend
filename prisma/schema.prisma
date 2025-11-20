@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+enum TypeComponent {
+  CPU
+  GPU
+  MEMORY
+  POWER
+  MOTHERBOARD
+  DISK
+  COOLING
+  CASE
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name         String
+  email        String  @unique
+  phone        String  @unique
+  password     String
+  refreshToken String?
+  role         Role    @default(USER)
+
+  carts      Cart[]
+  configures Configure[]
+
+  @@map("users")
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+
+  productId Int
+  userId    Int
+
+  product Product @relation(fields: [productId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String
+  content     String
+  images      Json
+
+  carts Cart[]
+}
+
+model Configure {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name   String
+  socket String?
+  ddr    String?
+  watt   Int?
+
+  components ComponentOnConfigure[]
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Component {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  type        TypeComponent
+  description String?
+  price       Float?
+  images      Json?
+  socket      String?
+  ddr         String?
+  watt        Int?
+  formFactor  String?
+  rating      Float? @default(5)
+
+  configures ComponentOnConfigure[]
+}
+
+model ComponentOnConfigure {
+  id          Int @id @default(autoincrement())
+  configureId Int
+  componentId Int
+  quantity    Int @default(1)
+
+  configure Configure @relation(fields: [configureId], references: [id])
+  component Component @relation(fields: [componentId], references: [id])
+
+  @@unique([configureId, componentId])
+  @@map("component_on_configure")
+}
