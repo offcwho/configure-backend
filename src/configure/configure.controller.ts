@@ -35,13 +35,8 @@ export class ConfigureController {
     return this.configureService.update(req.user.userId, parseInt(configureId), dto);
   }
 
-  @Delete('component')
-  removeComponent(@Query('configureId') configureId: string, @Query('componentId') componentId: string, @Req() req) {
-    return this.configureService.removeComponent(req.user.userId, parseInt(configureId), parseInt(componentId));
-  }
-
   @Delete(':id')
   remove(@Param('id') id: string, @Req() req) {
-    return this.configureService.remove(parseInt(id), req.user.userId);
+    return this.configureService.remove({ id: parseInt(id), userId: req.user.userId });
   }
 }

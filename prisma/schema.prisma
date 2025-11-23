@@ -37,6 +37,7 @@ model User {
 
   carts      Cart[]
   configures Configure[]
+  orders     Order[]
 
   @@map("users")
 }
@@ -60,8 +61,11 @@ model Product {
   description String
   content     String
   images      Json
+  price       Float
+  rating      Float?
 
-  carts Cart[]
+  carts  Cart[]
+  orders Order[]
 }
 
 model Configure {
@@ -69,10 +73,12 @@ model Configure {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  name   String
-  socket String?
-  ddr    String?
-  watt   Int?
+  name       String
+  socket     String?
+  ddr        String?
+  watt       Int?
+  formFactor String?
+  price      Float?
 
   components ComponentOnConfigure[]
 
@@ -94,7 +100,8 @@ model Component {
   ddr         String?
   watt        Int?
   formFactor  String?
-  rating      Float? @default(5)
+  rating      Float?        @default(5)
+  power       String?
 
   configures ComponentOnConfigure[]
 }
@@ -105,9 +112,20 @@ model ComponentOnConfigure {
   componentId Int
   quantity    Int @default(1)
 
-  configure Configure @relation(fields: [configureId], references: [id])
-  component Component @relation(fields: [componentId], references: [id])
+  configure Configure @relation(fields: [configureId], references: [id], onDelete: Cascade)
+  component Component @relation(fields: [componentId], references: [id], onDelete: Cascade)
 
   @@unique([configureId, componentId])
   @@map("component_on_configure")
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+
+  userId    Int
+  productId Int
+  state     String
+
+  product Product @relation(fields: [productId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
 }

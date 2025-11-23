@@ -64,6 +64,11 @@ export class ConfigureService {
         c.component.type === "MOTHERBOARD"
     )?.component.socket ?? null;
 
+    const formFactorSource = updated.components.find(
+      c =>
+        c.component.type === "MOTHERBOARD"
+    )?.component.formFactor ?? null;
+
     const ddrSource = updated.components.find(
       c => c.component.type === "MEMORY"
     )?.component.ddr ?? null;
@@ -73,12 +78,19 @@ export class ConfigureService {
       0
     );
 
+    const totalPrice = updated.components.reduce(
+      (sum, c) => sum + (c.component.price ?? 0),
+      0
+    );
+
     await this.prisma.configure.update({
       where: { id: configureId, userId },
       data: {
         socket: socketSource,
         ddr: ddrSource,
         watt: totalWatt,
+        formFactor: formFactorSource,
+        price: totalPrice,
       }
     });
     return updated;
@@ -163,11 +175,10 @@ export class ConfigureService {
     return config;
   }
 
-  remove(id: number, userId: number) {
+  async remove({ id, userId }: { id: number, userId: number }) {
     if (!userId) return new NotAcceptableException(`Вы не авторизованны!`);
-
-    const configure = this.prisma.configure.findUnique({
-      where: { id, userId }
+    const configure = await this.prisma.configure.findUnique({
+      where: { id }
     });
 
     if (!configure) throw new NotFoundException(`Конфигурация которую вы собираетесь удалить не найдена!`);

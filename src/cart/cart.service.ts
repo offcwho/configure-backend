@@ -5,39 +5,42 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class CartService {
   constructor(private readonly prisma: PrismaService) { }
 
-  async create(productId: number, userId: number) {
+  async create(userId: number, productId: number) {
     if (!userId) return new NotAcceptableException(`Вы не авторизованны!`);
 
     const product = await this.prisma.product.findUnique({
       where: { id: productId }
     });
 
-    if (!product) {
-      return new NotFoundException(`Товар который вы собираетесь добавить в корзину не существует`);
-    } else {
-      const cartItem = await this.prisma.cart.create({
-        data: { productId, userId }
-      });
+    if (!product) return new NotFoundException(`Товар который вы собираетесь добавить в корзину не существует`);
 
-      if (!cartItem) return new Error(`Не удалось добавить в корзину`);
+    const cartItem = await this.prisma.cart.create({
+      data: { productId, userId }
+    });
 
-      return cartItem;
-    }
+    if (!cartItem) return new Error(`Не удалось добавить в корзину`);
+
+    return cartItem;
   }
 
   async findAll(userId: number) {
-    if (!userId) return new NotAcceptableException(`Вы не авторизованны!`);
+    if (!userId) {
+      throw new NotAcceptableException('Вы не авторизованы!');
+    }
 
-    const cart = await this.prisma.cart.findMany({
-      where: {
-        userId
-      }
+    const cartItems = await this.prisma.cart.findMany({
+      where: { userId },
+      include: { product: true },
     });
 
-    if (!cart) throw new NotFoundException(`Корзина пуста`);
+    if (cartItems.length === 0) {
+      throw new NotFoundException('Корзина пуста');
+    }
 
-    return cart;
-
+    return cartItems.map(item => ({
+      cartId: item.id,
+      product: item.product,
+    }));
   }
 
   async remove(userId: number, id: number) {
