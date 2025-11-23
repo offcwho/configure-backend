@@ -7,13 +7,13 @@ import path from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(cookieParser());
   app.enableCors({
     origin: process.env.CLIENT_URL || 'https://configure-xucy.vercel.app',
     credentials: true,
   });
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api');
-  app.use(cookieParser());
   await app.listen(process.env.PORT ?? 9000);
   console.log('AdminJS available at http://localhost:3000/admin');
 }
