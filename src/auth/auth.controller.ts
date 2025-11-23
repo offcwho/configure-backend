@@ -42,8 +42,8 @@ export class AuthController {
   @Post('logout')
   @UseGuards(AuthGuard('jwt'))
   async logout(@Res() res: Response) {
-    res.clearCookie('accessToken');
-    res.clearCookie('refreshToken');
+    res.clearCookie('accessToken', { httpOnly: true, secure: true, sameSite: 'none' });
+    res.clearCookie('refreshToken', { httpOnly: true, secure: true, sameSite: 'none' });
     return res.json({ message: 'Вы вышли из своего аккаунта' });
   }
 
