@@ -50,7 +50,7 @@ export class AuthController {
   private setCookies(res: Response, tokens: { accessToken: string; refreshToken: string }) {
     const isProd = process.env.NODE_ENV === 'production';
 
-    res.cookie('accessToken', tokens.accessToken, { httpOnly: true, secure: isProd, sameSite: isProd ? 'none' : 'lax', });
-    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: isProd, sameSite: isProd ? 'none' : 'lax', });
+    res.cookie('accessToken', tokens.accessToken, { httpOnly: true, secure: true, sameSite: 'none' });
+    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: isProd, sameSite: 'none' });
   }
 }
