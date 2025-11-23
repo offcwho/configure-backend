@@ -13,12 +13,6 @@ export class AuthService {
   async register(dto: RegisterDto) {
     const hashedPassword = await argon2.hash(dto.password);
 
-    const searchUniquePhone = await this.prisma.user.findUnique({
-      where: { phone: dto.phone }
-    });
-
-    if (searchUniquePhone) throw new ConflictException('Аккаунт с таким номером телефона уже существует');
-
     const searchUniqueEmail = await this.prisma.user.findUnique({
       where: { email: dto.email }
     });
@@ -26,7 +20,7 @@ export class AuthService {
     if (searchUniqueEmail) throw new ConflictException('Аккаунт с такой почтой уже существует');
 
     const user = await this.prisma.user.create({
-      data: { email: dto.email, phone: dto.phone, password: hashedPassword, name: dto.name, role: dto.role },
+      data: { email: dto.email, password: hashedPassword, name: dto.name, role: dto.role },
     });
     return this.generateTokens(user.id, user.email, user.role);
   }

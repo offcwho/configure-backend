@@ -8,9 +8,6 @@ export class RegisterDto {
     @IsEmail()
     email: string;
 
-    @IsPhoneNumber()
-    phone: string;
-
     @IsEnum(Role)
     role: Role
 
