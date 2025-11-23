@@ -8,7 +8,7 @@ import path from 'path';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: process.env.CLIENT_URL || 'http://localhost:3000/',
+    origin: process.env.CLIENT_URL || 'https://configure-xucy.vercel.app/',
     credentials: true,
   });
   app.useGlobalPipes(new ValidationPipe());
