@@ -20,7 +20,7 @@ export class AuthService {
     if (searchUniqueEmail) throw new ConflictException('Аккаунт с такой почтой уже существует');
 
     const user = await this.prisma.user.create({
-      data: { email: dto.email, password: hashedPassword, name: dto.name, role: dto.role },
+      data: { email: dto.email, password: hashedPassword, name: dto.name },
     });
     return this.generateTokens(user.id, user.email, user.role);
   }

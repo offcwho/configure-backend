@@ -8,9 +8,6 @@ export class RegisterDto {
     @IsEmail()
     email: string;
 
-    @IsEnum(Role)
-    role: Role
-
     @IsString()
     @MinLength(5, { message: 'Минимальная длина пароля 5 символов!' })
     password: string;
