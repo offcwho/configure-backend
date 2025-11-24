@@ -23,7 +23,7 @@ export class ProductsService {
     return product;
   }
 
-  async adminCreate(role: string, dto: CreateProductDto, file: Express.Multer.File) {
+  async adminCreate(role: string, dto: any, file: Express.Multer.File) {
     if (role !== "ADMIN") return new NotAcceptableException("У вас нет доступа");
 
     const normalizedPath = file.path.replace(/\\/g, '/');
