@@ -6,6 +6,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { plainToInstance } from 'class-transformer';
+import { validateOrReject } from 'class-validator';
 
 @Controller('products')
 @UseGuards(AuthGuard('jwt'))
@@ -34,9 +36,12 @@ export class ProductsController {
       limits: { fileSize: 10 * 1024 * 1024 },
     }),
   )
-  async createAdmin(@Req() req, @Body() dtoString: string, @UploadedFile() file: Express.Multer.File) {
-    const dto: CreateProductDto = JSON.parse(dtoString);
-    return this.productsService.adminCreate(req.user.role, dto, file);
+  async createAdmin(@Req() req, @Body() dto: any, @UploadedFile() file: Express.Multer.File) {
+    console.log(dto);
+
+    const validatedDto = plainToInstance(CreateProductDto, dto);
+    await validateOrReject(validatedDto);
+    return this.productsService.adminCreate(req.user.role, validatedDto, file);
   }
   @Patch(':id')
   @UseInterceptors(
