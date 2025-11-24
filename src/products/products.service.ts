@@ -64,7 +64,7 @@ export class ProductsService {
         description: dto.description,
         content: dto.content,
         price: dto.price,
-        images: imagePath, // только путь к файлу
+        images: imagePath,
       },
     });
   }

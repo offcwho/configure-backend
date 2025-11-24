@@ -44,7 +44,6 @@ export class ProductsController {
   @Patch(':id')
   @FormDataRequest()
   async adminUpdate(@Param('id') id: string, @Req() req, @Body() dto: UpdateProductDto) {
-    return dto;
     return this.productsService.adminUpdate(parseInt(id), req.user.role, dto);
   }
 }
