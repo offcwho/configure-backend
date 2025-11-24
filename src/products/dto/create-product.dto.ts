@@ -5,9 +5,9 @@ export class CreateProductDto {
     @IsString()
     name: string;
     @IsString()
-    description?: string;
+    description: string;
     @IsString()
-    content?: string;
+    content: string;
     @Type(() => Number)
     @IsInt()
     price: number;
