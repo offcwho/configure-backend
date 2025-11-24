@@ -34,7 +34,7 @@ export class ProductsService {
 
     return this.prisma.product.update({
       where: { id },
-      data: dto
+      data: { ...dto }
     });
   }
 }
