@@ -8,6 +8,7 @@ import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { plainToInstance } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
+import { FormDataRequest } from 'nestjs-form-data';
 
 @Controller('products')
 @UseGuards(AuthGuard('jwt'))
@@ -40,6 +41,7 @@ export class ProductsController {
     return this.productsService.adminCreate(req.user.role, dto, file);
   }
   @Patch(':id')
+  @FormDataRequest()
   @UseInterceptors(
     FileInterceptor('images', {
       storage: diskStorage({
@@ -53,6 +55,7 @@ export class ProductsController {
     }),
   )
   async adminUpdate(@Param('id') id: string, @Req() req, @Body() dto: UpdateProductDto, @UploadedFile() file: Express.Multer.File) {
+    console.log(dto);
     return this.productsService.adminUpdate(parseInt(id), req.user.role, dto, file);
   }
 }
