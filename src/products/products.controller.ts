@@ -34,7 +34,7 @@ export class ProductsController {
       limits: { fileSize: 10 * 1024 * 1024 },
     }),
   )
-  async createAdmin(@Req() req, @Body() dto: any, @UploadedFile() file: Express.Multer.File) {
+  async createAdmin(@Req() req, @Body() dto: CreateProductDto, @UploadedFile() file: Express.Multer.File) {
     return this.productsService.adminCreate(req.user.role, dto, file);
   }
   @Patch(':id')
