@@ -1,5 +1,4 @@
 import { IsString, IsInt } from 'class-validator';
-import { IsFile, IsFiles, MaxFileSize, HasMimeType, MemoryStoredFile } from 'nestjs-form-data';
 
 export class CreateProductDto {
     @IsString()
@@ -13,8 +12,4 @@ export class CreateProductDto {
 
     @IsInt()
     price: number;
-
-    @IsFile() // если одно изображение
-    images: MemoryStoredFile;
-    // или @IsFiles() для массива файлов
 }
