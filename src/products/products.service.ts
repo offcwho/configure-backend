@@ -23,7 +23,7 @@ export class ProductsService {
     return product;
   }
 
-  async adminUpdate(id: number, role: string, dto: UpdateProductDto) {
+  async adminUpdate(id: number, role: string, dto: UpdateProductDto, file: Express.Multer.File) {
     if (role !== "ADMIN") return new NotAcceptableException("У вас нет доступа");
 
     const product = await this.prisma.product.findUnique({
@@ -32,9 +32,11 @@ export class ProductsService {
 
     if (!product) return new NotFoundException(`Данного продукта не существует`);
 
+    const normalizedPath = file.path.replace(/\\/g, '/');
+
     return this.prisma.product.update({
       where: { id },
-      data: { ...dto }
+      data: { ...dto, images: normalizedPath }
     });
   }
 }
