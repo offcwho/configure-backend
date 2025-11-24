@@ -15,7 +15,9 @@ async function bootstrap() {
     ],
     credentials: true,
   });
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+  }));
   app.setGlobalPrefix('api');
   await app.listen(process.env.PORT ?? 9000);
   console.log('AdminJS available at http://localhost:3000/admin');
