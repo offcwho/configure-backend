@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotAcceptableException, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -21,5 +21,20 @@ export class ProductsService {
     if (!product) throw new NotFoundException(`Продукт не найден!`);
 
     return product;
+  }
+
+  async adminUpdate(id: number, role: string, data: UpdateProductDto) {
+    if (role !== "ADMIN") return new NotAcceptableException("У вас нет доступа");
+
+    const product = await this.prisma.product.findUnique({
+      where: { id }
+    });
+
+    if (!product) return new NotFoundException(`Данного продукта не существует`);
+
+    return this.prisma.product.update({
+      where: { id },
+      data: data
+    });
   }
 }
