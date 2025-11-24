@@ -1,3 +1,4 @@
+import { Transform } from "class-transformer";
 import { IsInt, IsString } from "class-validator";
 
 export class CreateProductDto {
@@ -11,5 +12,6 @@ export class CreateProductDto {
     content: string;
 
     @IsInt()
+    @Transform(({ value }) => parseInt(value, 10))
     price: number;
 }
