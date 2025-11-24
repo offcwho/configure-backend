@@ -23,7 +23,7 @@ export class ProductsService {
     return product;
   }
 
-  async adminUpdate(id: number, role: string, data: UpdateProductDto) {
+  async adminUpdate(id: number, role: string, dto: UpdateProductDto) {
     if (role !== "ADMIN") return new NotAcceptableException("У вас нет доступа");
 
     const product = await this.prisma.product.findUnique({
@@ -34,7 +34,7 @@ export class ProductsService {
 
     return this.prisma.product.update({
       where: { id },
-      data: data
+      data: dto
     });
   }
 }
