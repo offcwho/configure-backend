@@ -22,23 +22,35 @@ export class ProductsController {
     return this.productsService.findOne(parseInt(id));
   }
   @Post()
-  async createAdmin(@Req() req) {
-    return
-  }
-  @Patch(':id')
   @UseInterceptors(
     FileInterceptor('images', {
       storage: diskStorage({
-        destination: './uploads', // убедись, что папка существует
+        destination: './uploads',
         filename: (_, file, callback) => {
           const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
           callback(null, uniqueSuffix + extname(file.originalname));
         },
       }),
-      limits: { fileSize: 10 * 1024 * 1024 }, // максимум 10 МБ
+      limits: { fileSize: 10 * 1024 * 1024 },
     }),
   )
-  async adminUpdate(@Param('id') id: string, @Req() req, @Body() dto: UpdateProductDto, @UploadedFile() file: Express.Multer.File,) {
+  async createAdmin(@Req() req, @Body() dto: CreateProductDto, @UploadedFile() file: Express.Multer.File) {
+    return this.productsService.adminCreate(req.user.role, dto, file)
+  }
+  @Patch(':id')
+  @UseInterceptors(
+    FileInterceptor('images', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (_, file, callback) => {
+          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+          callback(null, uniqueSuffix + extname(file.originalname));
+        },
+      }),
+      limits: { fileSize: 10 * 1024 * 1024 },
+    }),
+  )
+  async adminUpdate(@Param('id') id: string, @Req() req, @Body() dto: UpdateProductDto, @UploadedFile() file: Express.Multer.File) {
     return this.productsService.adminUpdate(parseInt(id), req.user.role, dto, file);
   }
 }

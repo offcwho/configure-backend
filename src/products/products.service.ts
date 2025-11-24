@@ -23,6 +23,18 @@ export class ProductsService {
     return product;
   }
 
+  async adminCreate(role: string, dto: CreateProductDto, file: Express.Multer.File) {
+    if (role !== "ADMIN") return new NotAcceptableException("У вас нет доступа");
+
+    const normalizedPath = file.path.replace(/\\/g, '/');
+
+    const product = await this.prisma.product.create({
+      data: { ...dto, images: normalizedPath }
+    });
+
+    return product;
+  }
+
   async adminUpdate(id: number, role: string, dto: UpdateProductDto, file: Express.Multer.File) {
     if (role !== "ADMIN") return new NotAcceptableException("У вас нет доступа");
 
