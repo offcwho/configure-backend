@@ -52,8 +52,9 @@ export class ProductsService {
     if (dto.images) {
       const file = dto.images as MemoryStoredFile;
       const fileName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalName)}`;
-      imagePath = join(__dirname, '/uploads', fileName);
-
+      const uploadDir = join(process.cwd(), 'uploads');
+      await fs.mkdir(uploadDir, { recursive: true });
+      const imagePath = join(uploadDir, fileName);
       await fs.writeFile(imagePath, file.buffer);
     }
 
