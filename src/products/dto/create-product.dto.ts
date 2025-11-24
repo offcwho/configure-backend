@@ -1,10 +1,14 @@
+import { Type } from 'class-transformer';
 import { IsString, IsInt } from 'class-validator';
-import { IsFile, IsFiles, MaxFileSize, HasMimeType, MemoryStoredFile } from 'nestjs-form-data';
 
 export class CreateProductDto {
+    @IsString()
     name: string;
+    @IsString()
     description?: string;
+    @IsString()
     content?: string;
-    price: string;
-    images: MemoryStoredFile;
+    @Type(() => Number)
+    @IsInt()
+    price: number;
 }

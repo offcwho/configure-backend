@@ -2,9 +2,6 @@ import { Injectable, NotAcceptableException, NotFoundException } from '@nestjs/c
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { MemoryStoredFile } from 'nestjs-form-data';
-import { extname, join } from 'path';
-import * as fs from 'fs/promises';
 
 @Injectable()
 export class ProductsService {
@@ -38,7 +35,7 @@ export class ProductsService {
     return product;
   }
 
-  async adminUpdate(id: number, role: string, dto: UpdateProductDto) {
+  async adminUpdate(id: number, role: string, dto: UpdateProductDto, file: Express.Multer.File) {
     if (role !== "ADMIN") return new NotAcceptableException("У вас нет доступа");
 
     const product = await this.prisma.product.findUnique({
@@ -47,26 +44,11 @@ export class ProductsService {
 
     if (!product) return new NotFoundException(`Данного продукта не существует`);
 
-    let imagePath: string | undefined;
-
-    if (dto.images) {
-      const file = dto.images as MemoryStoredFile;
-      const fileName = `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalName)}`;
-      const uploadDir = join(process.cwd(), 'uploads');
-      await fs.mkdir(uploadDir, { recursive: true });
-      const imagePath = join(uploadDir, fileName);
-      await fs.writeFile(imagePath, file.buffer);
-    }
+    const normalizedPath = file.path.replace(/\\/g, '/');
 
     return this.prisma.product.update({
       where: { id },
-      data: {
-        name: dto.name,
-        description: dto.description,
-        content: dto.content,
-        price: parseInt(String(dto.price)),
-        images: imagePath,
-      },
+      data: { ...dto, images: normalizedPath }
     });
   }
 }
