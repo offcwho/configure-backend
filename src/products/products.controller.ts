@@ -39,6 +39,6 @@ export class ProductsController {
     }),
   )
   async adminUpdate(@Param('id') id: string, @Req() req, @Body() dto: UpdateProductDto, @UploadedFile() file: Express.Multer.File,) {
-    return this.productsService.adminUpdate(parseInt(id), req.user.role, dto);
+    return this.productsService.adminUpdate(parseInt(id), req.user.role, dto, file);
   }
 }
