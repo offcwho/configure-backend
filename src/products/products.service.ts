@@ -63,7 +63,7 @@ export class ProductsService {
         name: dto.name,
         description: dto.description,
         content: dto.content,
-        price: dto.price,
+        price: parseInt(String(dto.price)),
         images: imagePath,
       },
     });

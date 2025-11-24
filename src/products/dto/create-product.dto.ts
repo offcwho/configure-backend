@@ -3,8 +3,8 @@ import { IsFile, IsFiles, MaxFileSize, HasMimeType, MemoryStoredFile } from 'nes
 
 export class CreateProductDto {
     name: string;
-    description: string;
-    content: string;
-    price: number;
+    description?: string;
+    content?: string;
+    price: string;
     images: MemoryStoredFile;
 }
