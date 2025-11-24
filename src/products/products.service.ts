@@ -29,7 +29,7 @@ export class ProductsService {
     const normalizedPath = file.path.replace(/\\/g, '/');
 
     const product = await this.prisma.product.create({
-      data: { ...dto, images: normalizedPath }
+      data: { name: dto.name, description: dto.description, content: dto.content, price: dto.price, images: normalizedPath }
     });
 
     return product;
