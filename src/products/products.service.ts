@@ -51,4 +51,14 @@ export class ProductsService {
       data: { ...dto, images: normalizedPath }
     });
   }
+  async remove(id: number, role: string) {
+    if (role !== "ADMIN") return new NotAcceptableException("У вас нет доступа");
+    const product = await this.prisma.product.findUnique({
+      where: { id }
+    });
+    if (!product) return new NotFoundException(`Данного продукта не существует`);
+    return this.prisma.product.delete({
+      where: { id }
+    });
+  }
 }

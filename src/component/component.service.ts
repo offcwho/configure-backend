@@ -19,7 +19,8 @@ export class ComponentService {
   }
 
   findAll() {
-    return `This action returns all component`;
+    const components = this.prisma.component.findMany();
+    return components;
   }
 
   async findType(type: TypeComponent, socket?: string, ddr?: string) {

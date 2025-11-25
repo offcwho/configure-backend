@@ -19,6 +19,12 @@ export class ComponentController {
   findType(@Query('type') type: TypeComponent, @Query('socket') socket?: string, @Query('ddrType') ddr?: string) {
     return this.componentService.findType(type, socket, ddr);
   }
+
+  @Get()
+  findAll(){
+    return this.componentService.findAll();
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateComponentDto: UpdateComponentDto) {
     return this.componentService.update(+id, updateComponentDto);

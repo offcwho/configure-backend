@@ -54,4 +54,8 @@ export class ProductsController {
     console.log(dto)
     return this.productsService.adminUpdate(parseInt(id), req.user.role, dto, file);
   }
+  @Delete()
+  async remove(@Param('id') id: string, @Req() req) {
+    return this.productsService.remove(parseInt(id), req.user.role);
+  }
 }
