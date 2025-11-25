@@ -18,6 +18,11 @@ export class CreateComponentDto {
     @Type(() => Number)
     price?: number;
 
+    @IsNumber()
+    @IsOptional()
+    @Type(() => Number)
+    watt?: number;
+
     @IsArray()
     @IsOptional()
     images?: any[];
