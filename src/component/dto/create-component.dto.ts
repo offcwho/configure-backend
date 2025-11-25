@@ -4,10 +4,8 @@ import { TypeComponent } from '@prisma/client';
 
 export class CreateComponentDto {
     @IsString()
-    @IsNotEmpty()
     name: string;
 
-    @IsNotEmpty()
     @IsEnum(TypeComponent)
     type: TypeComponent;
 

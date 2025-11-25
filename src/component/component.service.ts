@@ -8,13 +8,17 @@ import { TypeComponent } from '@prisma/client';
 export class ComponentService {
   constructor(private readonly prisma: PrismaService) { }
 
-  async create(dto: CreateComponentDto, role: string) {
+  async create(dto: CreateComponentDto, role: string, file: Express.Multer.File) {
     if (role === `ADMIN`) {
+      const normalizedPath = file.path.replace(/\\/g, '/');
+
       const component = await this.prisma.component.create({
-        data: { ...dto }
+        data: { ...dto, images: normalizedPath }
       });
 
       if (!component) throw new Error(`Не удалось создать компонент`)
+
+      return component
     }
   }
 

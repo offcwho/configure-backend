@@ -1,9 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards, Query, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ComponentService } from './component.service';
 import { CreateComponentDto } from './dto/create-component.dto';
 import { UpdateComponentDto } from './dto/update-component.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { TypeComponent } from '@prisma/client';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
 @Controller('component')
 @UseGuards(AuthGuard('jwt'))
@@ -11,8 +14,20 @@ export class ComponentController {
   constructor(private readonly componentService: ComponentService) { }
 
   @Post()
-  create(@Req() req, @Body() createComponentDto: CreateComponentDto) {
-    return this.componentService.create(createComponentDto, req.user.role);
+  @UseInterceptors(
+    FileInterceptor('images', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: (_, file, callback) => {
+          const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+          callback(null, uniqueSuffix + extname(file.originalname));
+        },
+      }),
+      limits: { fileSize: 10 * 1024 * 1024 },
+    }),
+  )
+  async create(@Req() req, @Body() createComponentDto: CreateComponentDto, @UploadedFile() file: Express.Multer.File) {
+    return this.componentService.create(createComponentDto, req.user.role, file);
   }
 
   @Get()
@@ -21,7 +36,7 @@ export class ComponentController {
   }
 
   @Get()
-  findAll(){
+  findAll() {
     return this.componentService.findAll();
   }
 
