@@ -21,7 +21,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
     console.log('Connecting to database...');
     await this.$connect();
     console.log('✅ Prisma connected to:',
-      process.env.DATABASE_URL?.replace(/:[^:]*@/, ':****@'));
+      process.env.DATABASE_URL2?.replace(/:[^:]*@/, ':****@'));
   }
 
   async onModuleDestroy() {
