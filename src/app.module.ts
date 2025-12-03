@@ -7,7 +7,6 @@ import { CartModule } from './cart/cart.module';
 import { ConfigureModule } from './configure/configure.module';
 import { ComponentModule } from './component/component.module';
 import { PrismaService } from './prisma/prisma.service';
-import { AdminModule } from './admin/admin.module';
 import { OrderModule } from './order/order.module';
 import { UploadModule } from './upload/upload.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -24,7 +23,6 @@ import { RefererMiddleware } from './middleware/referer.middleware';
     CartModule,
     ConfigureModule,
     ComponentModule,
-    AdminModule,
     OrderModule,
     UploadModule
   ],
