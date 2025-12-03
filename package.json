@@ -8,7 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "node dist/main.js",
+    "start": "node dist/src/main.js",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -33,6 +33,7 @@
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.1.9",
     "@nestjs/serve-static": "^5.0.4",
+    "@prisma/adapter-pg": "^7.0.1",
     "@prisma/client": "^7.0.1",
     "adminjs": "^7.8.17",
     "argon2": "^0.44.0",
@@ -43,6 +44,7 @@
     "nestjs-form-data": "^1.9.93",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
+    "pg": "^8.16.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
