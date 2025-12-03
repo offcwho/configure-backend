@@ -19,7 +19,6 @@ async function bootstrap() {
 
   app.use('/uploads', express.static(join(__dirname, '..', 'uploads'), {
     setHeaders: (res, path) => {
-      // Устанавливаем правильные заголовки для изображений
       if (path.endsWith('.jpg') || path.endsWith('.jpeg') ||
         path.endsWith('.png') || path.endsWith('.gif')) {
         res.setHeader('Content-Type', 'image/jpeg');
