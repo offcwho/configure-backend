@@ -1,7 +1,7 @@
 import { Injectable, NotAcceptableException } from '@nestjs/common';
-import { Role } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import type { Express } from 'express';
+import { Role } from 'src/generated/prisma/enums';
 
 @Injectable()
 export class UploadService {

@@ -3,10 +3,10 @@ import { ComponentService } from './component.service';
 import { CreateComponentDto } from './dto/create-component.dto';
 import { UpdateComponentDto } from './dto/update-component.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { TypeComponent } from '@prisma/client';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { TypeComponent } from 'src/generated/prisma/enums';
 
 @Controller('component')
 @UseGuards(AuthGuard('jwt'))

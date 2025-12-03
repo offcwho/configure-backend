@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateComponentDto } from './dto/create-component.dto';
 import { UpdateComponentDto } from './dto/update-component.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { TypeComponent } from '@prisma/client';
+import { TypeComponent } from 'src/generated/prisma/enums';
 
 @Injectable()
 export class ComponentService {
