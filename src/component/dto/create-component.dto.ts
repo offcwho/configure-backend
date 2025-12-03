@@ -1,6 +1,6 @@
 import { IsString, IsOptional, IsNumber, IsArray, IsNotEmpty, IsEnum } from 'class-validator';
 import { Type } from 'class-transformer';
-import { TypeComponent } from '@prisma/client';
+import { TypeComponent } from 'src/generated/prisma/enums';
 
 export class CreateComponentDto {
     @IsString()
