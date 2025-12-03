@@ -29,6 +29,7 @@ export class ProductsController {
         filename: (_, file, callback) => {
           const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
           callback(null, uniqueSuffix + extname(file.originalname));
+          console.log("FileUpload")
         },
       }),
       limits: { fileSize: 10 * 1024 * 1024 },
@@ -45,6 +46,7 @@ export class ProductsController {
         filename: (_, file, callback) => {
           const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
           callback(null, uniqueSuffix + extname(file.originalname));
+          console.log("FileUpload")
         },
       }),
       limits: { fileSize: 10 * 1024 * 1024 },
