@@ -1,116 +1,11 @@
 generator client {
-  provider     = "prisma-client"
-  output       = "../src/generated/prisma"
-  moduleFormat = "cjs"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  moduleFormat    = "cjs"
 }
 
 datasource db {
-  provider = "postgresql"
-  schemas  = ["mynewschema"]
-}
-
-model User {
-  id           Int         @id @default(autoincrement())
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  name         String
-  email        String      @unique
-  password     String
-  refreshToken String?
-  role         Role        @default(USER)
-  carts        Cart[]
-  configures   Configure[]
-  orders       Order[]
-
-  @@map("users")
-  @@schema("mynewschema")
-}
-
-model Cart {
-  id        Int     @id @default(autoincrement())
-  productId Int
-  userId    Int
-  product   Product @relation(fields: [productId], references: [id])
-  user      User    @relation(fields: [userId], references: [id])
-
-  @@schema("mynewschema")
-}
-
-model Product {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String
-  description String
-  content     String
-  images      Json
-  price       Float
-  rating      Float?
-  carts       Cart[]
-  orders      Order[]
-
-  @@schema("mynewschema")
-}
-
-model Configure {
-  id         Int                    @id @default(autoincrement())
-  createdAt  DateTime               @default(now())
-  updatedAt  DateTime               @updatedAt
-  name       String
-  socket     String?
-  ddr        String?
-  watt       Int?
-  formFactor String?
-  price      Float?
-  userId     Int
-  user       User                   @relation(fields: [userId], references: [id])
-  components ComponentOnConfigure[]
-
-  @@schema("mynewschema")
-}
-
-model Component {
-  id          Int                    @id @default(autoincrement())
-  createdAt   DateTime               @default(now())
-  updatedAt   DateTime               @updatedAt
-  name        String
-  type        TypeComponent
-  description String?
-  price       Float?
-  images      Json?
-  socket      String?
-  ddr         String?
-  watt        Int?
-  formFactor  String?
-  rating      Float?                 @default(5)
-  power       String?
-  configures  ComponentOnConfigure[]
-
-  @@schema("mynewschema")
-}
-
-model ComponentOnConfigure {
-  id          Int       @id @default(autoincrement())
-  configureId Int
-  componentId Int
-  quantity    Int       @default(1)
-  component   Component @relation(fields: [componentId], references: [id], onDelete: Cascade)
-  configure   Configure @relation(fields: [configureId], references: [id], onDelete: Cascade)
-
-  @@unique([configureId, componentId])
-  @@map("component_on_configure")
-  @@schema("mynewschema")
-}
-
-model Order {
-  id        Int     @id @default(autoincrement())
-  userId    Int
-  productId Int
-  state     String
-  product   Product @relation(fields: [productId], references: [id])
-  user      User    @relation(fields: [userId], references: [id])
-
-  @@schema("mynewschema")
+  provider = "sqlite"
 }
 
 enum TypeComponent {
@@ -122,13 +17,115 @@ enum TypeComponent {
   DISK
   COOLING
   CASE
-
-  @@schema("mynewschema")
 }
 
 enum Role {
   USER
   ADMIN
+}
 
-  @@schema("mynewschema")
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name         String
+  email        String  @unique
+  password     String
+  refreshToken String?
+  role         Role    @default(USER)
+
+  carts      Cart[]
+  configures Configure[]
+  orders     Order[]
+
+  @@map("users")
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+
+  productId Int
+  userId    Int
+
+  product Product @relation(fields: [productId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  description String
+  content     String
+  images      Json
+  price       Float
+  rating      Float?
+
+  carts  Cart[]
+  orders Order[]
+}
+
+model Configure {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name       String
+  socket     String?
+  ddr        String?
+  watt       Int?
+  formFactor String?
+  price      Float?
+
+  components ComponentOnConfigure[]
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Component {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  type        TypeComponent
+  description String?
+  price       Float?
+  images      Json?
+  socket      String?
+  ddr         String?
+  watt        Int?
+  formFactor  String?
+  rating      Float?        @default(5)
+  power       String?
+
+  configures ComponentOnConfigure[]
+}
+
+model ComponentOnConfigure {
+  id          Int @id @default(autoincrement())
+  configureId Int
+  componentId Int
+  quantity    Int @default(1)
+
+  configure Configure @relation(fields: [configureId], references: [id], onDelete: Cascade)
+  component Component @relation(fields: [componentId], references: [id], onDelete: Cascade)
+
+  @@unique([configureId, componentId])
+  @@map("component_on_configure")
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+
+  userId    Int
+  productId Int
+  state     String
+
+  product Product @relation(fields: [productId], references: [id])
+  user    User    @relation(fields: [userId], references: [id])
 }

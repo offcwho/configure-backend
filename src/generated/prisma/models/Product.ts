@@ -1414,7 +1414,6 @@ export type ProductCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * The data used to create many Products.
    */
   data: Prisma.ProductCreateManyInput | Prisma.ProductCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1433,7 +1432,6 @@ export type ProductCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * The data used to create many Products.
    */
   data: Prisma.ProductCreateManyInput | Prisma.ProductCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
