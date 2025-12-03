@@ -1464,7 +1464,6 @@ export type ComponentCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many Components.
    */
   data: Prisma.ComponentCreateManyInput | Prisma.ComponentCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
@@ -1483,7 +1482,6 @@ export type ComponentCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exten
    * The data used to create many Components.
    */
   data: Prisma.ComponentCreateManyInput | Prisma.ComponentCreateManyInput[]
-  skipDuplicates?: boolean
 }
 
 /**
