@@ -285,6 +285,7 @@ export type ConfigureOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   components?: Prisma.ComponentOnConfigureOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
+  _relevance?: Prisma.ConfigureOrderByRelevanceInput
 }
 
 export type ConfigureWhereUniqueInput = Prisma.AtLeast<{
@@ -438,6 +439,12 @@ export type ConfigureListRelationFilter = {
 
 export type ConfigureOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type ConfigureOrderByRelevanceInput = {
+  fields: Prisma.ConfigureOrderByRelevanceFieldEnum | Prisma.ConfigureOrderByRelevanceFieldEnum[]
+  sort: Prisma.SortOrder
+  search: string
 }
 
 export type ConfigureCountOrderByAggregateInput = {
@@ -594,6 +601,7 @@ export type ConfigureCreateOrConnectWithoutUserInput = {
 
 export type ConfigureCreateManyUserInputEnvelope = {
   data: Prisma.ConfigureCreateManyUserInput | Prisma.ConfigureCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
 export type ConfigureUpsertWithWhereUniqueWithoutUserInput = {
@@ -790,33 +798,7 @@ export type ConfigureSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   _count?: boolean | Prisma.ConfigureCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["configure"]>
 
-export type ConfigureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  name?: boolean
-  socket?: boolean
-  ddr?: boolean
-  watt?: boolean
-  formFactor?: boolean
-  price?: boolean
-  userId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["configure"]>
 
-export type ConfigureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
-  name?: boolean
-  socket?: boolean
-  ddr?: boolean
-  watt?: boolean
-  formFactor?: boolean
-  price?: boolean
-  userId?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["configure"]>
 
 export type ConfigureSelectScalar = {
   id?: boolean
@@ -836,12 +818,6 @@ export type ConfigureInclude<ExtArgs extends runtime.Types.Extensions.InternalAr
   components?: boolean | Prisma.Configure$componentsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ConfigureCountOutputTypeDefaultArgs<ExtArgs>
-}
-export type ConfigureIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-}
-export type ConfigureIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $ConfigurePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -979,30 +955,6 @@ export interface ConfigureDelegate<ExtArgs extends runtime.Types.Extensions.Inte
   createMany<T extends ConfigureCreateManyArgs>(args?: Prisma.SelectSubset<T, ConfigureCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Create many Configures and returns the data saved in the database.
-   * @param {ConfigureCreateManyAndReturnArgs} args - Arguments to create many Configures.
-   * @example
-   * // Create many Configures
-   * const configure = await prisma.configure.createManyAndReturn({
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Create many Configures and only return the `id`
-   * const configureWithIdOnly = await prisma.configure.createManyAndReturn({
-   *   select: { id: true },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  createManyAndReturn<T extends ConfigureCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ConfigureCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConfigurePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-  /**
    * Delete a Configure.
    * @param {ConfigureDeleteArgs} args - Arguments to delete one Configure.
    * @example
@@ -1065,36 +1017,6 @@ export interface ConfigureDelegate<ExtArgs extends runtime.Types.Extensions.Inte
    * 
    */
   updateMany<T extends ConfigureUpdateManyArgs>(args: Prisma.SelectSubset<T, ConfigureUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
-
-  /**
-   * Update zero or more Configures and returns the data updated in the database.
-   * @param {ConfigureUpdateManyAndReturnArgs} args - Arguments to update many Configures.
-   * @example
-   * // Update many Configures
-   * const configure = await prisma.configure.updateManyAndReturn({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Update zero or more Configures and only return the `id`
-   * const configureWithIdOnly = await prisma.configure.updateManyAndReturn({
-   *   select: { id: true },
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  updateManyAndReturn<T extends ConfigureUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ConfigureUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConfigurePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one Configure.
@@ -1525,28 +1447,7 @@ export type ConfigureCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * The data used to create many Configures.
    */
   data: Prisma.ConfigureCreateManyInput | Prisma.ConfigureCreateManyInput[]
-}
-
-/**
- * Configure createManyAndReturn
- */
-export type ConfigureCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Configure
-   */
-  select?: Prisma.ConfigureSelectCreateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Configure
-   */
-  omit?: Prisma.ConfigureOmit<ExtArgs> | null
-  /**
-   * The data used to create many Configures.
-   */
-  data: Prisma.ConfigureCreateManyInput | Prisma.ConfigureCreateManyInput[]
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ConfigureIncludeCreateManyAndReturn<ExtArgs> | null
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1591,36 +1492,6 @@ export type ConfigureUpdateManyArgs<ExtArgs extends runtime.Types.Extensions.Int
    * Limit how many Configures to update.
    */
   limit?: number
-}
-
-/**
- * Configure updateManyAndReturn
- */
-export type ConfigureUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Configure
-   */
-  select?: Prisma.ConfigureSelectUpdateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the Configure
-   */
-  omit?: Prisma.ConfigureOmit<ExtArgs> | null
-  /**
-   * The data used to update Configures.
-   */
-  data: Prisma.XOR<Prisma.ConfigureUpdateManyMutationInput, Prisma.ConfigureUncheckedUpdateManyInput>
-  /**
-   * Filter which Configures to update
-   */
-  where?: Prisma.ConfigureWhereInput
-  /**
-   * Limit how many Configures to update.
-   */
-  limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ConfigureIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

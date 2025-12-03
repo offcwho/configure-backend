@@ -464,6 +464,7 @@ export type ComponentOnConfigureCreateOrConnectWithoutConfigureInput = {
 
 export type ComponentOnConfigureCreateManyConfigureInputEnvelope = {
   data: Prisma.ComponentOnConfigureCreateManyConfigureInput | Prisma.ComponentOnConfigureCreateManyConfigureInput[]
+  skipDuplicates?: boolean
 }
 
 export type ComponentOnConfigureUpsertWithWhereUniqueWithoutConfigureInput = {
@@ -510,6 +511,7 @@ export type ComponentOnConfigureCreateOrConnectWithoutComponentInput = {
 
 export type ComponentOnConfigureCreateManyComponentInputEnvelope = {
   data: Prisma.ComponentOnConfigureCreateManyComponentInput | Prisma.ComponentOnConfigureCreateManyComponentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ComponentOnConfigureUpsertWithWhereUniqueWithoutComponentInput = {
@@ -585,23 +587,7 @@ export type ComponentOnConfigureSelect<ExtArgs extends runtime.Types.Extensions.
   component?: boolean | Prisma.ComponentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["componentOnConfigure"]>
 
-export type ComponentOnConfigureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  configureId?: boolean
-  componentId?: boolean
-  quantity?: boolean
-  configure?: boolean | Prisma.ConfigureDefaultArgs<ExtArgs>
-  component?: boolean | Prisma.ComponentDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["componentOnConfigure"]>
 
-export type ComponentOnConfigureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
-  id?: boolean
-  configureId?: boolean
-  componentId?: boolean
-  quantity?: boolean
-  configure?: boolean | Prisma.ConfigureDefaultArgs<ExtArgs>
-  component?: boolean | Prisma.ComponentDefaultArgs<ExtArgs>
-}, ExtArgs["result"]["componentOnConfigure"]>
 
 export type ComponentOnConfigureSelectScalar = {
   id?: boolean
@@ -612,14 +598,6 @@ export type ComponentOnConfigureSelectScalar = {
 
 export type ComponentOnConfigureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "configureId" | "componentId" | "quantity", ExtArgs["result"]["componentOnConfigure"]>
 export type ComponentOnConfigureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  configure?: boolean | Prisma.ConfigureDefaultArgs<ExtArgs>
-  component?: boolean | Prisma.ComponentDefaultArgs<ExtArgs>
-}
-export type ComponentOnConfigureIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  configure?: boolean | Prisma.ConfigureDefaultArgs<ExtArgs>
-  component?: boolean | Prisma.ComponentDefaultArgs<ExtArgs>
-}
-export type ComponentOnConfigureIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   configure?: boolean | Prisma.ConfigureDefaultArgs<ExtArgs>
   component?: boolean | Prisma.ComponentDefaultArgs<ExtArgs>
 }
@@ -753,30 +731,6 @@ export interface ComponentOnConfigureDelegate<ExtArgs extends runtime.Types.Exte
   createMany<T extends ComponentOnConfigureCreateManyArgs>(args?: Prisma.SelectSubset<T, ComponentOnConfigureCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
 
   /**
-   * Create many ComponentOnConfigures and returns the data saved in the database.
-   * @param {ComponentOnConfigureCreateManyAndReturnArgs} args - Arguments to create many ComponentOnConfigures.
-   * @example
-   * // Create many ComponentOnConfigures
-   * const componentOnConfigure = await prisma.componentOnConfigure.createManyAndReturn({
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Create many ComponentOnConfigures and only return the `id`
-   * const componentOnConfigureWithIdOnly = await prisma.componentOnConfigure.createManyAndReturn({
-   *   select: { id: true },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  createManyAndReturn<T extends ComponentOnConfigureCreateManyAndReturnArgs>(args?: Prisma.SelectSubset<T, ComponentOnConfigureCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComponentOnConfigurePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-  /**
    * Delete a ComponentOnConfigure.
    * @param {ComponentOnConfigureDeleteArgs} args - Arguments to delete one ComponentOnConfigure.
    * @example
@@ -839,36 +793,6 @@ export interface ComponentOnConfigureDelegate<ExtArgs extends runtime.Types.Exte
    * 
    */
   updateMany<T extends ComponentOnConfigureUpdateManyArgs>(args: Prisma.SelectSubset<T, ComponentOnConfigureUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<Prisma.BatchPayload>
-
-  /**
-   * Update zero or more ComponentOnConfigures and returns the data updated in the database.
-   * @param {ComponentOnConfigureUpdateManyAndReturnArgs} args - Arguments to update many ComponentOnConfigures.
-   * @example
-   * // Update many ComponentOnConfigures
-   * const componentOnConfigure = await prisma.componentOnConfigure.updateManyAndReturn({
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * 
-   * // Update zero or more ComponentOnConfigures and only return the `id`
-   * const componentOnConfigureWithIdOnly = await prisma.componentOnConfigure.updateManyAndReturn({
-   *   select: { id: true },
-   *   where: {
-   *     // ... provide filter here
-   *   },
-   *   data: [
-   *     // ... provide data here
-   *   ]
-   * })
-   * Note, that providing `undefined` is treated as the value not being there.
-   * Read more here: https://pris.ly/d/null-undefined
-   * 
-   */
-  updateManyAndReturn<T extends ComponentOnConfigureUpdateManyAndReturnArgs>(args: Prisma.SelectSubset<T, ComponentOnConfigureUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComponentOnConfigurePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
   /**
    * Create or update one ComponentOnConfigure.
@@ -1293,28 +1217,7 @@ export type ComponentOnConfigureCreateManyArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many ComponentOnConfigures.
    */
   data: Prisma.ComponentOnConfigureCreateManyInput | Prisma.ComponentOnConfigureCreateManyInput[]
-}
-
-/**
- * ComponentOnConfigure createManyAndReturn
- */
-export type ComponentOnConfigureCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ComponentOnConfigure
-   */
-  select?: Prisma.ComponentOnConfigureSelectCreateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the ComponentOnConfigure
-   */
-  omit?: Prisma.ComponentOnConfigureOmit<ExtArgs> | null
-  /**
-   * The data used to create many ComponentOnConfigures.
-   */
-  data: Prisma.ComponentOnConfigureCreateManyInput | Prisma.ComponentOnConfigureCreateManyInput[]
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ComponentOnConfigureIncludeCreateManyAndReturn<ExtArgs> | null
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1359,36 +1262,6 @@ export type ComponentOnConfigureUpdateManyArgs<ExtArgs extends runtime.Types.Ext
    * Limit how many ComponentOnConfigures to update.
    */
   limit?: number
-}
-
-/**
- * ComponentOnConfigure updateManyAndReturn
- */
-export type ComponentOnConfigureUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the ComponentOnConfigure
-   */
-  select?: Prisma.ComponentOnConfigureSelectUpdateManyAndReturn<ExtArgs> | null
-  /**
-   * Omit specific fields from the ComponentOnConfigure
-   */
-  omit?: Prisma.ComponentOnConfigureOmit<ExtArgs> | null
-  /**
-   * The data used to update ComponentOnConfigures.
-   */
-  data: Prisma.XOR<Prisma.ComponentOnConfigureUpdateManyMutationInput, Prisma.ComponentOnConfigureUncheckedUpdateManyInput>
-  /**
-   * Filter which ComponentOnConfigures to update
-   */
-  where?: Prisma.ComponentOnConfigureWhereInput
-  /**
-   * Limit how many ComponentOnConfigures to update.
-   */
-  limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ComponentOnConfigureIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

@@ -11,9 +11,23 @@ export class AuthService {
   constructor(private prisma: PrismaService, private jwt: JwtService) { }
 
   async register(dto: RegisterDto) {
-    const hashedPassword = await argon2.hash(dto.password);
 
- 
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: dto.email },
+    });
+
+    if (existingUser) {
+      throw new ConflictException('Пользователь с таким email уже существует');
+    }
+
+    const hashedPassword = await argon2.hash(dto.password, {
+      type: argon2.argon2id,
+      memoryCost: 65536,
+      timeCost: 3,
+      parallelism: 1,
+      hashLength: 32,
+    });
+
     const user = await this.prisma.user.create({
       data: { email: dto.email, password: hashedPassword, name: dto.name },
     });
