@@ -5,7 +5,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
+  schemas  = ["mynewschema"]
 }
 
 enum TypeComponent {
@@ -17,11 +18,15 @@ enum TypeComponent {
   DISK
   COOLING
   CASE
+
+  @@schema("mynewschema")
 }
 
 enum Role {
   USER
   ADMIN
+
+  @@schema("mynewschema")
 }
 
 model User {
@@ -40,6 +45,7 @@ model User {
   orders     Order[]
 
   @@map("users")
+  @@schema("mynewschema")
 }
 
 model Cart {
@@ -50,6 +56,8 @@ model Cart {
 
   product Product @relation(fields: [productId], references: [id])
   user    User    @relation(fields: [userId], references: [id])
+  
+  @@schema("mynewschema")
 }
 
 model Product {
@@ -66,6 +74,8 @@ model Product {
 
   carts  Cart[]
   orders Order[]
+
+  @@schema("mynewschema")
 }
 
 model Configure {
@@ -84,6 +94,8 @@ model Configure {
 
   userId Int
   user   User @relation(fields: [userId], references: [id])
+
+  @@schema("mynewschema")
 }
 
 model Component {
@@ -104,6 +116,8 @@ model Component {
   power       String?
 
   configures ComponentOnConfigure[]
+
+  @@schema("mynewschema")
 }
 
 model ComponentOnConfigure {
@@ -117,6 +131,8 @@ model ComponentOnConfigure {
 
   @@unique([configureId, componentId])
   @@map("component_on_configure")
+
+  @@schema("mynewschema")
 }
 
 model Order {
@@ -128,4 +144,6 @@ model Order {
 
   product Product @relation(fields: [productId], references: [id])
   user    User    @relation(fields: [userId], references: [id])
+
+  @@schema("mynewschema")
 }
