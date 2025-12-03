@@ -464,6 +464,7 @@ export type ComponentOnConfigureCreateOrConnectWithoutConfigureInput = {
 
 export type ComponentOnConfigureCreateManyConfigureInputEnvelope = {
   data: Prisma.ComponentOnConfigureCreateManyConfigureInput | Prisma.ComponentOnConfigureCreateManyConfigureInput[]
+  skipDuplicates?: boolean
 }
 
 export type ComponentOnConfigureUpsertWithWhereUniqueWithoutConfigureInput = {
@@ -510,6 +511,7 @@ export type ComponentOnConfigureCreateOrConnectWithoutComponentInput = {
 
 export type ComponentOnConfigureCreateManyComponentInputEnvelope = {
   data: Prisma.ComponentOnConfigureCreateManyComponentInput | Prisma.ComponentOnConfigureCreateManyComponentInput[]
+  skipDuplicates?: boolean
 }
 
 export type ComponentOnConfigureUpsertWithWhereUniqueWithoutComponentInput = {
@@ -1293,6 +1295,7 @@ export type ComponentOnConfigureCreateManyArgs<ExtArgs extends runtime.Types.Ext
    * The data used to create many ComponentOnConfigures.
    */
   data: Prisma.ComponentOnConfigureCreateManyInput | Prisma.ComponentOnConfigureCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1311,6 +1314,7 @@ export type ComponentOnConfigureCreateManyAndReturnArgs<ExtArgs extends runtime.
    * The data used to create many ComponentOnConfigures.
    */
   data: Prisma.ComponentOnConfigureCreateManyInput | Prisma.ComponentOnConfigureCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
