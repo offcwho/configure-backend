@@ -8,7 +8,7 @@ import 'dotenv/config'
 export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
   constructor() {
     const adapter = new PrismaPg({
-      url: process.env.DATABASE_URL
+      url: "postgresql://postgres:NHCkcSIdgmtWqhRMbbvCTWTrMDrTkIQL@crossover.proxy.rlwy.net:11966/railway?sslmode=require"
     });
     super({ adapter });
   }
