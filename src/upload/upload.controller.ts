@@ -17,7 +17,7 @@ import type { Express } from 'express';
 @Controller('upload')
 @UseGuards(AuthGuard('jwt'))
 export class UploadController {
-  constructor(private readonly uploadService: UploadService) {}
+  constructor(private readonly uploadService: UploadService) { }
 
   @Post(':id')
   @UseInterceptors(
@@ -27,6 +27,7 @@ export class UploadController {
         filename: (_, file, callback) => {
           const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
           callback(null, uniqueSuffix + extname(file.originalname));
+          console.log("uploadSuccess");
         },
       }),
       limits: { fileSize: 10 * 1024 * 1024 }, // максимум 10 МБ

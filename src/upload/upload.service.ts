@@ -8,6 +8,7 @@ export class UploadService {
   constructor(private readonly prisma: PrismaService) { }
 
   async uploadProductImage(file: Express.Multer.File, role: Role, id: number) {
+    console.log(file)
     if (role !== 'ADMIN') {
       throw new NotAcceptableException('У вас нет доступа!');
     }
