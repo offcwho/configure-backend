@@ -3,6 +3,8 @@ import { AppModule } from './app.module';
 import cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 import 'dotenv/config'
+import * as express from 'express';
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +16,18 @@ async function bootstrap() {
     ],
     credentials: true,
   });
+
+  app.use('/uploads', express.static(join(__dirname, '..', 'uploads'), {
+    setHeaders: (res, path) => {
+      // Устанавливаем правильные заголовки для изображений
+      if (path.endsWith('.jpg') || path.endsWith('.jpeg') ||
+        path.endsWith('.png') || path.endsWith('.gif')) {
+        res.setHeader('Content-Type', 'image/jpeg');
+        res.setHeader('Cache-Control', 'public, max-age=31536000');
+      }
+    }
+  }));
+
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
   }));
