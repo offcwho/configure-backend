@@ -57,7 +57,9 @@ export const ModelName = {
   Configure: 'Configure',
   Component: 'Component',
   ComponentOnConfigure: 'ComponentOnConfigure',
-  Order: 'Order'
+  Order: 'Order',
+  Feedback: 'Feedback',
+  FeedbackToUser: 'FeedbackToUser'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -170,6 +172,27 @@ export const OrderScalarFieldEnum = {
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
 
 
+export const FeedbackScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  content: 'content',
+  rating: 'rating'
+} as const
+
+export type FeedbackScalarFieldEnum = (typeof FeedbackScalarFieldEnum)[keyof typeof FeedbackScalarFieldEnum]
+
+
+export const FeedbackToUserScalarFieldEnum = {
+  id: 'id',
+  feedbackId: 'feedbackId',
+  userId: 'userId',
+  content: 'content'
+} as const
+
+export type FeedbackToUserScalarFieldEnum = (typeof FeedbackToUserScalarFieldEnum)[keyof typeof FeedbackToUserScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -264,4 +287,18 @@ export const OrderOrderByRelevanceFieldEnum = {
 } as const
 
 export type OrderOrderByRelevanceFieldEnum = (typeof OrderOrderByRelevanceFieldEnum)[keyof typeof OrderOrderByRelevanceFieldEnum]
+
+
+export const FeedbackOrderByRelevanceFieldEnum = {
+  content: 'content'
+} as const
+
+export type FeedbackOrderByRelevanceFieldEnum = (typeof FeedbackOrderByRelevanceFieldEnum)[keyof typeof FeedbackOrderByRelevanceFieldEnum]
+
+
+export const FeedbackToUserOrderByRelevanceFieldEnum = {
+  content: 'content'
+} as const
+
+export type FeedbackToUserOrderByRelevanceFieldEnum = (typeof FeedbackToUserOrderByRelevanceFieldEnum)[keyof typeof FeedbackToUserOrderByRelevanceFieldEnum]
 

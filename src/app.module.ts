@@ -12,6 +12,7 @@ import { UploadModule } from './upload/upload.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { RefererMiddleware } from './middleware/referer.middleware';
+import { FeedbacksModule } from './feedbacks/feedbacks.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -24,7 +25,8 @@ import { RefererMiddleware } from './middleware/referer.middleware';
     ConfigureModule,
     ComponentModule,
     OrderModule,
-    UploadModule
+    UploadModule,
+    FeedbacksModule
   ],
   controllers: [AppController],
   providers: [AppService],

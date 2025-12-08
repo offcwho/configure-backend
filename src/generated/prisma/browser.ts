@@ -52,3 +52,13 @@ export type ComponentOnConfigure = Prisma.ComponentOnConfigureModel
  * 
  */
 export type Order = Prisma.OrderModel
+/**
+ * Model Feedback
+ * 
+ */
+export type Feedback = Prisma.FeedbackModel
+/**
+ * Model FeedbackToUser
+ * 
+ */
+export type FeedbackToUser = Prisma.FeedbackToUserModel

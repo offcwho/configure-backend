@@ -390,7 +390,9 @@ export const ModelName = {
   Configure: 'Configure',
   Component: 'Component',
   ComponentOnConfigure: 'ComponentOnConfigure',
-  Order: 'Order'
+  Order: 'Order',
+  Feedback: 'Feedback',
+  FeedbackToUser: 'FeedbackToUser'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "cart" | "product" | "configure" | "component" | "componentOnConfigure" | "order"
+    modelProps: "user" | "cart" | "product" | "configure" | "component" | "componentOnConfigure" | "order" | "feedback" | "feedbackToUser"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -872,6 +874,138 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Feedback: {
+      payload: Prisma.$FeedbackPayload<ExtArgs>
+      fields: Prisma.FeedbackFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FeedbackFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FeedbackFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackPayload>
+        }
+        findFirst: {
+          args: Prisma.FeedbackFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FeedbackFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackPayload>
+        }
+        findMany: {
+          args: Prisma.FeedbackFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackPayload>[]
+        }
+        create: {
+          args: Prisma.FeedbackCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackPayload>
+        }
+        createMany: {
+          args: Prisma.FeedbackCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.FeedbackDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackPayload>
+        }
+        update: {
+          args: Prisma.FeedbackUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackPayload>
+        }
+        deleteMany: {
+          args: Prisma.FeedbackDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FeedbackUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.FeedbackUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackPayload>
+        }
+        aggregate: {
+          args: Prisma.FeedbackAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFeedback>
+        }
+        groupBy: {
+          args: Prisma.FeedbackGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeedbackGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FeedbackCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeedbackCountAggregateOutputType> | number
+        }
+      }
+    }
+    FeedbackToUser: {
+      payload: Prisma.$FeedbackToUserPayload<ExtArgs>
+      fields: Prisma.FeedbackToUserFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FeedbackToUserFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackToUserPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FeedbackToUserFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackToUserPayload>
+        }
+        findFirst: {
+          args: Prisma.FeedbackToUserFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackToUserPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FeedbackToUserFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackToUserPayload>
+        }
+        findMany: {
+          args: Prisma.FeedbackToUserFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackToUserPayload>[]
+        }
+        create: {
+          args: Prisma.FeedbackToUserCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackToUserPayload>
+        }
+        createMany: {
+          args: Prisma.FeedbackToUserCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        delete: {
+          args: Prisma.FeedbackToUserDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackToUserPayload>
+        }
+        update: {
+          args: Prisma.FeedbackToUserUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackToUserPayload>
+        }
+        deleteMany: {
+          args: Prisma.FeedbackToUserDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FeedbackToUserUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        upsert: {
+          args: Prisma.FeedbackToUserUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FeedbackToUserPayload>
+        }
+        aggregate: {
+          args: Prisma.FeedbackToUserAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFeedbackToUser>
+        }
+        groupBy: {
+          args: Prisma.FeedbackToUserGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeedbackToUserGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FeedbackToUserCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FeedbackToUserCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1005,6 +1139,27 @@ export const OrderScalarFieldEnum = {
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
 
 
+export const FeedbackScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  content: 'content',
+  rating: 'rating'
+} as const
+
+export type FeedbackScalarFieldEnum = (typeof FeedbackScalarFieldEnum)[keyof typeof FeedbackScalarFieldEnum]
+
+
+export const FeedbackToUserScalarFieldEnum = {
+  id: 'id',
+  feedbackId: 'feedbackId',
+  userId: 'userId',
+  content: 'content'
+} as const
+
+export type FeedbackToUserScalarFieldEnum = (typeof FeedbackToUserScalarFieldEnum)[keyof typeof FeedbackToUserScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1099,6 +1254,20 @@ export const OrderOrderByRelevanceFieldEnum = {
 } as const
 
 export type OrderOrderByRelevanceFieldEnum = (typeof OrderOrderByRelevanceFieldEnum)[keyof typeof OrderOrderByRelevanceFieldEnum]
+
+
+export const FeedbackOrderByRelevanceFieldEnum = {
+  content: 'content'
+} as const
+
+export type FeedbackOrderByRelevanceFieldEnum = (typeof FeedbackOrderByRelevanceFieldEnum)[keyof typeof FeedbackOrderByRelevanceFieldEnum]
+
+
+export const FeedbackToUserOrderByRelevanceFieldEnum = {
+  content: 'content'
+} as const
+
+export type FeedbackToUserOrderByRelevanceFieldEnum = (typeof FeedbackToUserOrderByRelevanceFieldEnum)[keyof typeof FeedbackToUserOrderByRelevanceFieldEnum]
 
 
 
@@ -1248,6 +1417,8 @@ export type GlobalOmitConfig = {
   component?: Prisma.ComponentOmit
   componentOnConfigure?: Prisma.ComponentOnConfigureOmit
   order?: Prisma.OrderOmit
+  feedback?: Prisma.FeedbackOmit
+  feedbackToUser?: Prisma.FeedbackToUserOmit
 }
 
 /* Types for Logging */
