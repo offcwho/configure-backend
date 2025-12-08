@@ -24,6 +24,7 @@ export class FeedbacksService {
     const feedbacks = await this.prisma.feedback.findMany({
       where: { id: productId },
       include: {
+        user: true,
         feedbackToUsers: true
       }
     })
