@@ -32,10 +32,6 @@ export class FeedbacksService {
     return feedbacks;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} feedback`;
-  }
-
   update(id: number, updateFeedbackDto: UpdateFeedbackDto) {
     return `This action updates a #${id} feedback`;
   }

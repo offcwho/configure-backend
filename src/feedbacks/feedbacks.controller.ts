@@ -1,25 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, UseGuards } from '@nestjs/common';
 import { FeedbacksService } from './feedbacks.service';
-import { CreateFeedbackDto } from './dto/create-feedback.dto';
+import { CreateFeedbackDto, CreateFeedbackToUserDto } from './dto/create-feedback.dto';
 import { UpdateFeedbackDto } from './dto/update-feedback.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('feedbacks')
+@UseGuards(AuthGuard('jwt'))
 export class FeedbacksController {
-  constructor(private readonly feedbacksService: FeedbacksService) {}
+  constructor(private readonly feedbacksService: FeedbacksService) { }
 
-  @Post()
-  create(@Body() createFeedbackDto: CreateFeedbackDto) {
-    return this.feedbacksService.create(createFeedbackDto);
+  @Post(':id')
+  async create(@Param('id') id: string, @Req() req, @Body() dto: CreateFeedbackDto) {
+    return this.feedbacksService.create(dto, parseInt(id), req.user.userId);
   }
 
-  @Get()
-  findAll() {
-    return this.feedbacksService.findAll();
+  @Post('/toUser/:id')
+  async createToUser(@Param('id') id: string, @Req() req, @Body() dto: CreateFeedbackToUserDto) {
+    return this.feedbacksService.createToUser(dto, req.user.userId, parseInt(id))
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.feedbacksService.findOne(+id);
+  findAll(@Param('id') id: string) {
+    return this.feedbacksService.findAll(parseInt(id));
   }
 
   @Patch(':id')
