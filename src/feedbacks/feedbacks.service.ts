@@ -25,7 +25,11 @@ export class FeedbacksService {
       where: { id: productId },
       include: {
         user: true,
-        feedbackToUsers: true
+        feedbackToUsers: {
+          include: {
+            user: true
+          }
+        }
       }
     })
     if (feedbacks.length < 0) throw new NotFoundException(`Ничего не найдено`)
