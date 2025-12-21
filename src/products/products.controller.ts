@@ -25,6 +25,8 @@ export class ProductsController {
   async findOne(@Param('id') id: string) {
     return this.productsService.findOne(parseInt(id));
   }
+  
+  @Post()
   @UseInterceptors(
     FileInterceptor('images', {
       storage: memoryStorage(), // Используем memoryStorage вместо diskStorage
