@@ -12,7 +12,7 @@ import {
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 
 @Injectable()
-export class yandexS3Service implements OnModuleInit {
+export class YandexS3Service implements OnModuleInit {
   private readonly logger = new Logger(YandexS3Service.name);
   private s3Client: S3Client;
   private bucketName: string;
