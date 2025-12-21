@@ -23,20 +23,18 @@ export class ProductsService {
     return product;
   }
 
-  async adminCreate(role: string, dto: CreateProductDto, file: Express.Multer.File) {
+  async adminCreate(role: string, dto: CreateProductDto, file: string) {
     console.log(file)
     if (role !== "ADMIN") return new NotAcceptableException("У вас нет доступа");
 
-    const normalizedPath = file.path.replace(/\\/g, '/');
-
     const product = await this.prisma.product.create({
-      data: { ...dto, images: normalizedPath }
+      data: { ...dto, images: file }
     });
 
     return product;
   }
 
-  async adminUpdate(id: number, role: string, dto: UpdateProductDto, file: Express.Multer.File) {
+  async adminUpdate(id: number, role: string, dto: UpdateProductDto, file: string) {
     if (role !== "ADMIN") return new NotAcceptableException("У вас нет доступа");
 
     const product = await this.prisma.product.findUnique({
@@ -45,11 +43,10 @@ export class ProductsService {
 
     if (!product) return new NotFoundException(`Данного продукта не существует`);
 
-    const normalizedPath = file.path.replace(/\\/g, '/');
 
     return this.prisma.product.update({
       where: { id },
-      data: { ...dto, images: normalizedPath }
+      data: { ...dto, images: file }
     });
   }
   async remove(id: number, role: string) {
