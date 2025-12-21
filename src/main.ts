@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import 'dotenv/config'
 import * as express from 'express';
 import { join } from 'path';
+import * as fs from 'fs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,15 +18,13 @@ async function bootstrap() {
     credentials: true,
   });
 
-  app.use('/uploads', express.static(join(__dirname, '..', 'uploads'), {
-    setHeaders: (res, path) => {
-      if (path.endsWith('.jpg') || path.endsWith('.jpeg') ||
-        path.endsWith('.png') || path.endsWith('.gif')) {
-        res.setHeader('Content-Type', 'image/jpeg');
-        res.setHeader('Cache-Control', 'public, max-age=31536000');
-      }
-    }
-  }));
+  const uploadDir = join(__dirname, '..', 'uploads', 'images');
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
+
+  // Настройка статических файлов через Express middleware
+  app.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
 
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
