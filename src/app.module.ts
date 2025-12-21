@@ -13,13 +13,19 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { RefererMiddleware } from './middleware/referer.middleware';
 import { FeedbacksModule } from './feedbacks/feedbacks.module';
+import { ConfigModule } from '@nestjs/config';
+import { YandexS3Module } from './yandex-s3/yandex-s3.module';
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'),
-      serveRoot: '/uploads',
-      exclude: ['/api/*'],
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
+      validationOptions: {
+        allowUnknown: true,
+        abortEarly: true,
+      },
     }),
+    YandexS3Module,
     ProductsModule,
     AuthModule,
     CartModule,
