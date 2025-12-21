@@ -23,9 +23,6 @@ async function bootstrap() {
     fs.mkdirSync(uploadDir, { recursive: true });
   }
 
-  // Настройка статических файлов через Express middleware
-  app.use('/uploads', express.static(join(__dirname, '..', 'uploads')));
-
   app.useGlobalPipes(new ValidationPipe({
     transform: true,
   }));

@@ -18,6 +18,7 @@ import { FeedbacksModule } from './feedbacks/feedbacks.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads',
+      exclude: ['/api/*'],
     }),
     ProductsModule,
     AuthModule,
@@ -31,4 +32,4 @@ import { FeedbacksModule } from './feedbacks/feedbacks.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
